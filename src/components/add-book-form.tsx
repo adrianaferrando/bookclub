@@ -17,7 +17,7 @@ export function AddBookForm() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="w-full rounded-xl border-2 border-dashed border-cream-dark bg-warm-white px-6 py-4 text-brown-light transition-colors hover:border-sage hover:text-sage-dark"
+        className="rounded-lg bg-forest px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
       >
         + Añadir un libro
       </button>

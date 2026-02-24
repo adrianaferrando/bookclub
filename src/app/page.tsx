@@ -33,30 +33,34 @@ export default async function Home() {
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-8">
-        <AddBookForm />
-
         {allBooks.length === 0 ? (
-          <div className="mt-16 text-center">
+          <div className="mt-12 text-center">
             <p className="font-serif text-2xl text-brown-light">
               Aún no hay libros
             </p>
             <p className="mt-2 text-brown-light">
-              ¡Añade el primero usando el formulario de arriba!
+              ¡Añade el primero para empezar!
             </p>
+            <div className="mt-6">
+              <AddBookForm />
+            </div>
           </div>
         ) : (
-          <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {allBooks.map((book) => (
-              <BookCard
-                key={book.id}
-                id={book.id}
-                title={book.title}
-                author={book.author}
-                coverUrl={book.coverUrl}
-                voteCount={book.voteCount}
-              />
-            ))}
-          </div>
+          <>
+            <AddBookForm />
+            <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
+              {allBooks.map((book) => (
+                <BookCard
+                  key={book.id}
+                  id={book.id}
+                  title={book.title}
+                  author={book.author}
+                  coverUrl={book.coverUrl}
+                  voteCount={book.voteCount}
+                />
+              ))}
+            </div>
+          </>
         )}
       </main>
     </div>
