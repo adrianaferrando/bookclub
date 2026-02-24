@@ -22,20 +22,16 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <header>
-        <div className="mx-auto max-w-5xl px-6 py-8">
-          <h1 className="font-serif text-4xl font-bold text-brown">
-            Book Club
-          </h1>
-          <p className="mt-2 text-brown-light">
-            Añade libros y vota por el próximo que leeremos juntos
-          </p>
-        </div>
-      </header>
+      <main className="mx-auto max-w-5xl px-6 pt-8 pb-12">
+        <h1 className="font-serif text-4xl font-bold text-brown">
+          Book Club
+        </h1>
+        <p className="mt-2 text-brown-light">
+          Añade libros y vota por el próximo que leeremos juntos
+        </p>
 
-      <main className="mx-auto max-w-5xl px-6 py-8">
         {allBooks.length === 0 ? (
-          <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
+          <div className="mt-8 flex flex-col items-center text-center">
             <BooksIllustration className="w-56" />
             <h2 className="mt-8 font-serif text-2xl font-bold text-brown">
               Aún no hay libros
@@ -49,7 +45,9 @@ export default async function Home() {
           </div>
         ) : (
           <>
-            <AddBookForm />
+            <div className="mt-6">
+              <AddBookForm />
+            </div>
             <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {allBooks.map((book) => (
                 <BookCard

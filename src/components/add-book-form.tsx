@@ -17,7 +17,7 @@ export function AddBookForm() {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="rounded-lg bg-forest px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
+        className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white shadow-lg shadow-forest/25 transition-all hover:bg-sage-dark hover:-translate-y-0.5 hover:shadow-xl hover:shadow-forest/30"
       >
         + Añadir un libro
       </button>
@@ -64,14 +64,14 @@ export function AddBookForm() {
       <div className="mt-4 flex gap-3">
         <button
           type="submit"
-          className="rounded-lg bg-forest px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
+          className="rounded-full bg-forest px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
         >
           Añadir
         </button>
         <button
           type="button"
           onClick={() => setIsOpen(false)}
-          className="rounded-lg px-5 py-2 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
+          className="rounded-full px-5 py-2 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
         >
           Cancelar
         </button>
