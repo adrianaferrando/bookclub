@@ -3,6 +3,7 @@ import { books, votes } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
 import { AddBookForm } from "@/components/add-book-form";
 import { BookCard } from "@/components/book-card";
+import { BooksIllustration } from "@/components/books-illustration";
 
 export default async function Home() {
   const allBooks = await db
@@ -34,10 +35,11 @@ export default async function Home() {
 
       <main className="mx-auto max-w-5xl px-6 py-8">
         {allBooks.length === 0 ? (
-          <div className="mt-12 text-center">
-            <p className="font-serif text-2xl text-brown-light">
+          <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
+            <BooksIllustration className="w-56" />
+            <h2 className="mt-8 font-serif text-2xl font-bold text-brown">
               Aún no hay libros
-            </p>
+            </h2>
             <p className="mt-2 text-brown-light">
               ¡Añade el primero para empezar!
             </p>
