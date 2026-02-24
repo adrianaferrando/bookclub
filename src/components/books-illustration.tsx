@@ -1,71 +1,61 @@
 export function BooksIllustration({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 280 200"
+      viewBox="0 0 240 180"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      {/* Mesa / superficie */}
-      <ellipse cx="140" cy="175" rx="120" ry="8" fill="#EDE8E0" />
+      {/* Estantería - fondo */}
+      <rect x="40" y="30" width="160" height="140" rx="3" fill="#D4C4A8" opacity="0.15" />
 
-      {/* Libro tumbado abajo */}
-      <rect x="80" y="148" width="85" height="12" rx="2" fill="#87A878" />
-      <rect x="80" y="148" width="85" height="2" rx="1" fill="#5C7A4E" />
+      {/* Estantería - laterales */}
+      <rect x="38" y="25" width="6" height="150" rx="2" fill="#C4A882" />
+      <rect x="196" y="25" width="6" height="150" rx="2" fill="#C4A882" />
 
-      {/* Libro tumbado abajo 2 */}
-      <rect x="75" y="136" width="90" height="12" rx="2" fill="#C4A882" />
-      <rect x="75" y="136" width="90" height="2" rx="1" fill="#A88B6A" />
+      {/* Estantería - tope */}
+      <rect x="36" y="22" width="168" height="6" rx="2" fill="#D4B896" />
 
-      {/* Libro vertical izquierda */}
-      <rect x="78" y="52" width="22" height="84" rx="2" fill="#3D5A3A" />
-      <rect x="80" y="56" width="1.5" height="76" rx="0.75" fill="#5C7A4E" opacity="0.5" />
-      <rect x="85" y="65" width="10" height="2" rx="1" fill="#87A878" opacity="0.7" />
-      <rect x="85" y="70" width="7" height="1.5" rx="0.75" fill="#87A878" opacity="0.5" />
+      {/* Estantería - balda del medio */}
+      <rect x="44" y="90" width="152" height="5" rx="1" fill="#C4A882" />
 
-      {/* Libro vertical 2 */}
-      <rect x="102" y="58" width="18" height="78" rx="2" fill="#D4A574" />
-      <rect x="104" y="62" width="1.5" height="70" rx="0.75" fill="#C4956A" opacity="0.5" />
-      <rect x="108" y="72" width="8" height="2" rx="1" fill="#FFF" opacity="0.3" />
+      {/* Estantería - base */}
+      <rect x="36" y="170" width="168" height="6" rx="2" fill="#D4B896" />
 
-      {/* Libro vertical 3 - más alto */}
-      <rect x="122" y="42" width="24" height="94" rx="2" fill="#7A6455" />
-      <rect x="124" y="46" width="1.5" height="86" rx="0.75" fill="#6A5445" opacity="0.5" />
-      <rect x="129" y="55" width="12" height="2" rx="1" fill="#EDE8E0" opacity="0.5" />
-      <rect x="129" y="60" width="8" height="1.5" rx="0.75" fill="#EDE8E0" opacity="0.3" />
+      {/* Sombra interior arriba */}
+      <rect x="44" y="28" width="152" height="3" fill="#C4A882" opacity="0.2" />
 
-      {/* Libro vertical 4 */}
-      <rect x="148" y="55" width="20" height="81" rx="2" fill="#87A878" />
-      <rect x="150" y="59" width="1.5" height="73" rx="0.75" fill="#6A9060" opacity="0.5" />
+      {/* Sombra interior debajo de balda */}
+      <rect x="44" y="95" width="152" height="3" fill="#C4A882" opacity="0.2" />
 
-      {/* Libro vertical 5 - ligeramente inclinado */}
-      <g transform="rotate(5 180 136)">
-        <rect x="170" y="60" width="18" height="76" rx="2" fill="#4A3728" />
-        <rect x="172" y="64" width="1.5" height="68" rx="0.75" fill="#6A5748" opacity="0.5" />
-        <rect x="176" y="74" width="8" height="2" rx="1" fill="#C4A882" opacity="0.5" />
-      </g>
+      {/* Telaraña esquina superior derecha */}
+      <path d="M196 28 C185 28, 180 33, 180 42" stroke="#C4A882" strokeWidth="0.5" opacity="0.5" />
+      <path d="M196 28 C188 32, 184 38, 184 48" stroke="#C4A882" strokeWidth="0.5" opacity="0.4" />
+      <path d="M196 28 C192 36, 190 42, 190 50" stroke="#C4A882" strokeWidth="0.5" opacity="0.35" />
+      <path d="M196 28 C194 38, 194 44, 195 52" stroke="#C4A882" strokeWidth="0.5" opacity="0.3" />
+      {/* Hilos horizontales de la telaraña */}
+      <path d="M182 36 C186 34, 190 35, 194 33" stroke="#C4A882" strokeWidth="0.4" opacity="0.35" />
+      <path d="M181 44 C186 41, 191 42, 195 40" stroke="#C4A882" strokeWidth="0.4" opacity="0.3" />
+      <path d="M184 50 C188 48, 192 48, 195 47" stroke="#C4A882" strokeWidth="0.4" opacity="0.25" />
 
-      {/* Taza */}
-      <ellipse cx="215" cy="148" rx="16" ry="4" fill="#EDE8E0" />
-      <path d="M199 148 C199 148, 199 168, 215 168 C231 168, 231 148, 231 148" fill="#FFFDF9" stroke="#EDE8E0" strokeWidth="1.5" />
-      <ellipse cx="215" cy="148" rx="14" ry="3" fill="#FFFDF9" />
-      <ellipse cx="215" cy="148" rx="11" ry="2" fill="#D4C4A8" opacity="0.4" />
-      {/* Asa */}
-      <path d="M231 152 C237 152, 240 156, 240 160 C240 164, 237 166, 231 166" fill="none" stroke="#EDE8E0" strokeWidth="2" />
-      {/* Vapor */}
-      <path d="M210 140 C210 136, 213 134, 213 130" stroke="#C4A882" strokeWidth="1" opacity="0.4" strokeLinecap="round" />
-      <path d="M216 138 C216 134, 219 132, 219 128" stroke="#C4A882" strokeWidth="1" opacity="0.3" strokeLinecap="round" />
-      <path d="M222 140 C222 136, 225 134, 225 130" stroke="#C4A882" strokeWidth="1" opacity="0.4" strokeLinecap="round" />
+      {/* Pequeña araña */}
+      <circle cx="186" cy="40" r="1.2" fill="#7A6455" opacity="0.5" />
+      <path d="M185 39 L183 37" stroke="#7A6455" strokeWidth="0.4" opacity="0.4" />
+      <path d="M187 39 L189 37" stroke="#7A6455" strokeWidth="0.4" opacity="0.4" />
+      <path d="M185 41 L183 43" stroke="#7A6455" strokeWidth="0.4" opacity="0.4" />
+      <path d="M187 41 L189 43" stroke="#7A6455" strokeWidth="0.4" opacity="0.4" />
 
-      {/* Plantita */}
-      <rect x="50" y="110" width="14" height="16" rx="3" fill="#D4A574" />
-      <path d="M57 110 C57 100, 50 95, 48 88" stroke="#87A878" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <path d="M57 108 C57 100, 63 96, 66 90" stroke="#87A878" strokeWidth="2" fill="none" strokeLinecap="round" />
-      <path d="M57 105 C54 98, 58 92, 55 85" stroke="#5C7A4E" strokeWidth="1.5" fill="none" strokeLinecap="round" />
-      {/* Hojas */}
-      <ellipse cx="46" cy="87" rx="5" ry="3" transform="rotate(-30 46 87)" fill="#87A878" />
-      <ellipse cx="67" cy="89" rx="5" ry="3" transform="rotate(20 67 89)" fill="#87A878" />
-      <ellipse cx="54" cy="83" rx="4" ry="2.5" transform="rotate(-10 54 83)" fill="#5C7A4E" />
+      {/* Motitas de polvo */}
+      <circle cx="70" cy="86" r="0.8" fill="#C4A882" opacity="0.3" />
+      <circle cx="130" cy="88" r="0.6" fill="#C4A882" opacity="0.25" />
+      <circle cx="160" cy="85" r="0.7" fill="#C4A882" opacity="0.3" />
+      <circle cx="90" cy="165" r="0.8" fill="#C4A882" opacity="0.3" />
+      <circle cx="150" cy="167" r="0.6" fill="#C4A882" opacity="0.25" />
+
+      {/* Marca sutil de donde podría ir un libro (sombra fantasma) */}
+      <rect x="60" y="95" width="14" height="70" rx="1" fill="#C4A882" opacity="0.08" />
+      <rect x="80" y="95" width="18" height="70" rx="1" fill="#C4A882" opacity="0.06" />
+      <rect x="104" y="95" width="12" height="70" rx="1" fill="#C4A882" opacity="0.08" />
     </svg>
   );
 }
