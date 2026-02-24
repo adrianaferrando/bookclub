@@ -21,7 +21,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen bg-cream">
-      <header className="border-b border-cream-dark bg-warm-white">
+      <header>
         <div className="mx-auto max-w-5xl px-6 py-8">
           <h1 className="font-serif text-4xl font-bold text-brown">
             Book Club
