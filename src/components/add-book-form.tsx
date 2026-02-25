@@ -62,11 +62,11 @@ export function AddBookForm() {
 
           {/* Bottom Sheet */}
           <div
-            className={`relative w-full max-w-lg transform transition-transform duration-300 ease-out ${
+            className={`relative w-full max-w-lg h-[75dvh] transform transition-transform duration-300 ease-out ${
               isVisible ? "translate-y-0" : "translate-y-full"
             }`}
           >
-            <div className="rounded-t-2xl bg-warm-white px-6 pt-3 pb-8 shadow-xl">
+            <div className="flex h-full flex-col rounded-t-2xl bg-warm-white px-6 pt-3 pb-10 shadow-xl">
               {/* Handle bar */}
               <div className="mb-4 flex justify-center">
                 <div className="h-1.5 w-10 rounded-full bg-cream-dark" />
@@ -79,7 +79,7 @@ export function AddBookForm() {
               <form
                 ref={formRef}
                 action={handleSubmit}
-                className="mt-5 flex flex-col gap-4"
+                className="mt-5 flex flex-1 flex-col gap-4"
               >
                 <div>
                   <label
@@ -114,17 +114,17 @@ export function AddBookForm() {
                     className="mt-1 w-full rounded-xl border border-cream-dark bg-cream px-4 py-3 text-brown placeholder:text-brown-light/50 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/20"
                   />
                 </div>
-                <div className="mt-2 flex gap-3">
+                <div className="mt-auto flex flex-col gap-3">
                   <button
                     type="submit"
-                    className="flex-1 rounded-full bg-forest py-3 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
+                    className="w-full rounded-full bg-forest py-3 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
                   >
                     Añadir
                   </button>
                   <button
                     type="button"
                     onClick={handleClose}
-                    className="flex-1 rounded-full border border-cream-dark py-3 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
+                    className="w-full rounded-full border border-cream-dark py-3 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
                   >
                     Cancelar
                   </button>
