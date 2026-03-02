@@ -26,7 +26,7 @@ export default async function Home() {
     <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-6 pt-8 pb-12">
         <h1 className="font-serif text-4xl font-bold text-brown">
-          Bienvenido al Book Club
+          📖 Bienvenido al Book Club
         </h1>
         <p className="mt-2 text-brown-light">
           Añade libros y vota por el próximo que leeremos juntos
