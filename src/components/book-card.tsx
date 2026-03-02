@@ -55,14 +55,14 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           </div>
         )}
 
-        {/* Vote area overlay */}
-        <div className="absolute bottom-2 right-2 flex items-center gap-1">
+        {/* Vote component */}
+        <div className="absolute bottom-2 right-2 flex items-center gap-1.5 rounded-full bg-white/90 shadow-sm backdrop-blur-sm">
           {/* Voter initials — click to expand list */}
           {voters.length > 0 && (
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="flex items-center -space-x-1.5 rounded-full bg-white/90 px-2 py-1 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+              className="flex items-center -space-x-1.5 pl-2 py-1 transition-opacity hover:opacity-80"
             >
               {visibleInitials.map((name, i) => (
                 <span
@@ -90,10 +90,10 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           >
             <button
               type="submit"
-              className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium shadow-sm backdrop-blur-sm transition-colors ${
+              className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium transition-colors ${
                 hasVoted
-                  ? "bg-[#E04080]/90 text-white hover:bg-[#E04080]"
-                  : "bg-white/90 text-brown hover:bg-white"
+                  ? "bg-[#E04080] text-white hover:bg-[#E04080]/80"
+                  : "text-brown hover:bg-black/5"
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
