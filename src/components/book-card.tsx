@@ -15,7 +15,7 @@ interface BookCardProps {
 export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: BookCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="aspect-[3/4] w-full bg-cream-dark">
+      <div className="aspect-square w-full bg-cream-dark">
         {coverUrl ? (
           <Image
             src={coverUrl}
