@@ -56,20 +56,23 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
         )}
 
         {/* Vote component */}
-        <div className="absolute bottom-2 right-2 flex items-center rounded-full bg-white/90 px-1 py-1 shadow-sm backdrop-blur-sm">
+        <div className={`absolute bottom-2 right-2 flex items-center rounded-full py-1 pl-2.5 shadow-sm backdrop-blur-sm transition-colors ${
+          hasVoted
+            ? "bg-[#E04080]/90 hover:bg-[#E04080]"
+            : "bg-white/90 hover:bg-white"
+        } ${voters.length > 0 ? "pr-1.5" : "pr-2.5"}`}>
           {/* Heart vote button */}
           <form
             action={() => {
               const name = username || "anonymous";
               toggleVote(id, name);
             }}
+            className="flex items-center"
           >
             <button
               type="submit"
-              className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-medium transition-colors ${
-                hasVoted
-                  ? "bg-[#E04080] text-white hover:bg-[#E04080]/80"
-                  : "text-brown hover:bg-black/5"
+              className={`flex items-center gap-1 text-sm font-medium ${
+                hasVoted ? "text-white" : "text-brown"
               }`}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -84,19 +87,25 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="flex items-center -space-x-1.5 pr-1 transition-opacity hover:opacity-80"
+              className="ml-1.5 flex items-center -space-x-1.5 transition-opacity hover:opacity-80"
             >
               {visibleInitials.map((name, i) => (
                 <span
                   key={i}
-                  className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E04080]/15 text-[9px] font-bold text-[#E04080] ring-1 ring-white"
+                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold ring-1 ${
+                    hasVoted
+                      ? "bg-white/25 text-white ring-[#E04080]/50"
+                      : "bg-[#E04080]/15 text-[#E04080] ring-white"
+                  }`}
                   title={name}
                 >
                   {getInitials(name)}
                 </span>
               ))}
               {extraCount > 0 && (
-                <span className="ml-2 pr-1 text-xs font-medium text-brown-light">
+                <span className={`ml-2 text-xs font-medium ${
+                  hasVoted ? "text-white/80" : "text-brown-light"
+                }`}>
                   +{extraCount}
                 </span>
               )}
