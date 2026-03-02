@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { books, votes } from "@/db/schema";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 import { AddBookForm } from "@/components/add-book-form";
 import { BookCard } from "@/components/book-card";
 import { BooksIllustration } from "@/components/books-illustration";
@@ -15,12 +15,26 @@ export default async function Home() {
       addedBy: books.addedBy,
       createdAt: books.createdAt,
       voteCount: sql<number>`count(${votes.id})`.as("vote_count"),
-      hasVoted: sql<number>`sum(case when ${votes.voterId} = 'anonymous' then 1 else 0 end)`.as("has_voted"),
     })
     .from(books)
     .leftJoin(votes, eq(books.id, votes.bookId))
     .groupBy(books.id)
     .orderBy(desc(sql`vote_count`), desc(books.createdAt));
+
+  // Get all voters grouped by book
+  const allVotes = await db
+    .select({
+      bookId: votes.bookId,
+      voterId: votes.voterId,
+    })
+    .from(votes);
+
+  const votersByBook = new Map<number, string[]>();
+  for (const vote of allVotes) {
+    const existing = votersByBook.get(vote.bookId) || [];
+    existing.push(vote.voterId);
+    votersByBook.set(vote.bookId, existing);
+  }
 
   return (
     <div className="min-h-screen">
@@ -61,7 +75,7 @@ export default async function Home() {
                   coverUrl={book.coverUrl}
                   addedBy={book.addedBy}
                   voteCount={book.voteCount}
-                  hasVoted={!!book.hasVoted}
+                  voters={votersByBook.get(book.id) || []}
                 />
               ))}
             </div>

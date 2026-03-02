@@ -2,6 +2,7 @@
 
 import { deleteBook, toggleVote } from "@/lib/actions/books";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BookCardProps {
   id: number;
@@ -10,10 +11,31 @@ interface BookCardProps {
   coverUrl: string | null;
   addedBy: string | null;
   voteCount: number;
-  hasVoted: boolean;
+  voters: string[];
 }
 
-export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, hasVoted }: BookCardProps) {
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, voters }: BookCardProps) {
+  const [username, setUsername] = useState("");
+  const [showVoters, setShowVoters] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("bookclub-username");
+    if (saved) setUsername(saved);
+  }, []);
+
+  const hasVoted = username ? voters.includes(username) : false;
+  const visibleInitials = voters.slice(0, 3);
+  const extraCount = voters.length - 3;
+
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
       <div className="relative aspect-square w-full bg-cream-dark">
@@ -33,22 +55,71 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, hasV
           </div>
         )}
 
-        {/* Vote button overlay */}
-        <form action={() => toggleVote(id, "anonymous")} className="absolute bottom-2 right-2">
-          <button
-            type="submit"
-            className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium shadow-sm backdrop-blur-sm transition-colors ${
-              hasVoted
-                ? "bg-[#E04080]/90 text-white hover:bg-[#E04080]"
-                : "bg-white/90 text-brown hover:bg-white"
-            }`}
+        {/* Vote area overlay */}
+        <div className="absolute bottom-2 right-2 flex items-center gap-1">
+          {/* Voter initials — click to expand list */}
+          {voters.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowVoters(!showVoters)}
+              className="flex items-center -space-x-1.5 rounded-full bg-white/90 px-2 py-1 shadow-sm backdrop-blur-sm transition-colors hover:bg-white"
+            >
+              {visibleInitials.map((name, i) => (
+                <span
+                  key={i}
+                  className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E04080]/15 text-[9px] font-bold text-[#E04080] ring-1 ring-white"
+                  title={name}
+                >
+                  {getInitials(name)}
+                </span>
+              ))}
+              {extraCount > 0 && (
+                <span className="ml-2 text-xs font-medium text-brown-light">
+                  +{extraCount}
+                </span>
+              )}
+            </button>
+          )}
+
+          {/* Heart vote button */}
+          <form
+            action={() => {
+              const name = username || "anonymous";
+              toggleVote(id, name);
+            }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" />
-            </svg>
-            <span>{voteCount}</span>
-          </button>
-        </form>
+            <button
+              type="submit"
+              className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium shadow-sm backdrop-blur-sm transition-colors ${
+                hasVoted
+                  ? "bg-[#E04080]/90 text-white hover:bg-[#E04080]"
+                  : "bg-white/90 text-brown hover:bg-white"
+              }`}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" />
+              </svg>
+              <span>{voteCount}</span>
+            </button>
+          </form>
+        </div>
+
+        {/* Expanded voter list */}
+        {showVoters && voters.length > 0 && (
+          <div className="absolute bottom-12 right-2 z-10 min-w-[120px] rounded-xl border border-cream-dark bg-warm-white p-2 shadow-lg">
+            <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-brown-light/60">
+              Votos
+            </p>
+            {voters.map((name, i) => (
+              <div key={i} className="flex items-center gap-2 rounded-lg px-1.5 py-1">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E04080]/15 text-[9px] font-bold text-[#E04080]">
+                  {getInitials(name)}
+                </span>
+                <span className="text-xs text-brown">{name}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="p-4">
@@ -66,7 +137,6 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, hasV
             <span className="text-xs text-brown-light/60">{addedBy}</span>
           </div>
         )}
-
       </div>
 
       {/* Delete button */}
