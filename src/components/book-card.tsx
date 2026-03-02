@@ -60,20 +60,22 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: Bo
           </div>
         )}
 
-        <form action={() => deleteBook(id)} className="mt-2">
-          <button
-            type="submit"
-            className="rounded-full p-1.5 text-brown-light/50 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
-            title="Eliminar libro"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 6h18" />
-              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-            </svg>
-          </button>
-        </form>
       </div>
+
+      {/* Delete button */}
+      <form action={() => deleteBook(id)} className="absolute bottom-2 right-2">
+        <button
+          type="submit"
+          className="rounded-full p-1.5 text-brown-light/50 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
+          title="Eliminar libro"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 6h18" />
+            <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+            <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+          </svg>
+        </button>
+      </form>
     </div>
   );
 }
