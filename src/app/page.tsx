@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { books, votes } from "@/db/schema";
-import { desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { AddBookForm } from "@/components/add-book-form";
 import { BookCard } from "@/components/book-card";
 import { BooksIllustration } from "@/components/books-illustration";
@@ -15,6 +15,7 @@ export default async function Home() {
       addedBy: books.addedBy,
       createdAt: books.createdAt,
       voteCount: sql<number>`count(${votes.id})`.as("vote_count"),
+      hasVoted: sql<number>`sum(case when ${votes.voterId} = 'anonymous' then 1 else 0 end)`.as("has_voted"),
     })
     .from(books)
     .leftJoin(votes, eq(books.id, votes.bookId))
@@ -59,6 +60,7 @@ export default async function Home() {
                   coverUrl={book.coverUrl}
                   addedBy={book.addedBy}
                   voteCount={book.voteCount}
+                  hasVoted={!!book.hasVoted}
                 />
               ))}
             </div>

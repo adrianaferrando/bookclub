@@ -10,9 +10,10 @@ interface BookCardProps {
   coverUrl: string | null;
   addedBy: string | null;
   voteCount: number;
+  hasVoted: boolean;
 }
 
-export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: BookCardProps) {
+export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, hasVoted }: BookCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
       <div className="relative aspect-square w-full bg-cream-dark">
@@ -36,9 +37,15 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: Bo
         <form action={() => toggleVote(id, "anonymous")} className="absolute bottom-2 right-2">
           <button
             type="submit"
-            className="flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-sm font-medium text-brown shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-forest"
+            className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium shadow-sm backdrop-blur-sm transition-colors ${
+              hasVoted
+                ? "bg-pink-500/90 text-white hover:bg-pink-600"
+                : "bg-white/90 text-brown hover:bg-white"
+            }`}
           >
-            <span>♥</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" />
+            </svg>
             <span>{voteCount}</span>
           </button>
         </form>
