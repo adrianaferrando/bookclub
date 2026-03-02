@@ -28,9 +28,10 @@ export default async function Home() {
         <h1 className="font-serif text-4xl font-bold text-brown">
           Bienvenido al Book Club
         </h1>
-        <p className="mt-2 text-brown-light">
-          Añade libros y vota por el próximo que leeremos juntos
-        </p>
+        <ol className="mt-2 list-decimal list-inside text-brown-light">
+          <li>Añade un libro que te apetezca leer</li>
+          <li>Vota tantos libros como quieras</li>
+        </ol>
 
         {allBooks.length === 0 ? (
           <div className="mt-8 flex flex-col items-center text-center">
