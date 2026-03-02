@@ -83,17 +83,17 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             </button>
           </form>
 
-          {/* Voter initials — stacked horizontally, click to expand list */}
+          {/* Avatar group — click to expand list */}
           {voters.length > 0 && (
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="ml-1.5 flex items-center -space-x-3 transition-opacity hover:opacity-80"
+              className="ml-2 flex items-center transition-opacity hover:opacity-80"
             >
               {visibleInitials.map((name, i) => (
                 <span
                   key={i}
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ring-2 ${
+                  className={`-ml-2 first:ml-0 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold ring-2 ${
                     hasVoted
                       ? "bg-[#F4A0C0] text-white ring-[#E04080]"
                       : "bg-[#FADCE8] text-[#E04080] ring-white"
@@ -106,10 +106,10 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
               ))}
               {extraCount > 0 && (
                 <span
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-bold ring-2 ${
+                  className={`-ml-2 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-semibold ring-2 ${
                     hasVoted
-                      ? "bg-white/20 text-white/90 ring-[#E04080]/70"
-                      : "bg-cream text-brown-light ring-white"
+                      ? "bg-[#C0305F] text-white ring-[#E04080]"
+                      : "bg-cream-dark text-brown-light ring-white"
                   }`}
                 >
                   +{extraCount}
