@@ -82,30 +82,37 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             </button>
           </form>
 
-          {/* Voter initials — click to expand list */}
+          {/* Voter initials — stacked, click to expand list */}
           {voters.length > 0 && (
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="ml-2 flex items-center gap-1 transition-opacity hover:opacity-80"
+              className="relative ml-2 flex items-center transition-opacity hover:opacity-80"
+              style={{ width: 24, height: 24 }}
             >
               {visibleInitials.map((name, i) => (
                 <span
                   key={i}
-                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ${
+                  className={`absolute flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ring-2 ${
                     hasVoted
-                      ? "bg-white/30 text-white"
-                      : "bg-[#E04080]/15 text-[#E04080]"
+                      ? "bg-white/30 text-white ring-[#E04080]/70"
+                      : "bg-[#E04080]/15 text-[#E04080] ring-white"
                   }`}
+                  style={{ top: -(visibleInitials.length - 1 - i) * 6, zIndex: i }}
                   title={name}
                 >
                   {getInitials(name)}
                 </span>
               ))}
               {extraCount > 0 && (
-                <span className={`text-xs font-medium ${
-                  hasVoted ? "text-white/80" : "text-brown-light"
-                }`}>
+                <span
+                  className={`absolute flex h-6 w-6 items-center justify-center rounded-full text-[9px] font-bold ring-2 ${
+                    hasVoted
+                      ? "bg-white/20 text-white/90 ring-[#E04080]/70"
+                      : "bg-cream text-brown-light ring-white"
+                  }`}
+                  style={{ top: -(visibleInitials.length) * 6, zIndex: 0 }}
+                >
                   +{extraCount}
                 </span>
               )}
