@@ -33,8 +33,9 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
   }, []);
 
   const hasVoted = username ? voters.includes(username) : false;
-  const visibleInitials = voters.slice(0, 3);
-  const extraCount = voters.length - 3;
+  const reversedVoters = [...voters].reverse();
+  const visibleInitials = reversedVoters.slice(0, 4);
+  const extraCount = voters.length - 4;
 
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
@@ -87,17 +88,17 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="ml-1.5 flex items-center -space-x-2 transition-opacity hover:opacity-80"
+              className="ml-1.5 flex items-center -space-x-3 transition-opacity hover:opacity-80"
             >
               {visibleInitials.map((name, i) => (
                 <span
                   key={i}
                   className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ring-2 ${
                     hasVoted
-                      ? "bg-white/30 text-white ring-[#E04080]/70"
-                      : "bg-[#E04080]/15 text-[#E04080] ring-white"
+                      ? "bg-[#F4A0C0] text-white ring-[#E04080]"
+                      : "bg-[#FADCE8] text-[#E04080] ring-white"
                   }`}
-                  style={{ zIndex: i }}
+                  style={{ zIndex: visibleInitials.length - i }}
                   title={name}
                 >
                   {getInitials(name)}
