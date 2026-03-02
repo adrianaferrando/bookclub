@@ -56,11 +56,11 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
         )}
 
         {/* Vote component */}
-        <div className={`absolute bottom-2 right-2 flex items-center rounded-full py-1 pl-2.5 shadow-sm backdrop-blur-sm transition-colors ${
+        <div className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm transition-colors ${
           hasVoted
             ? "bg-[#E04080]/90 hover:bg-[#E04080]"
             : "bg-white/90 hover:bg-white"
-        } ${voters.length > 0 ? "pr-1.5" : "pr-2.5"}`}>
+        } ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}>
           {/* Heart vote button */}
           <form
             action={() => {
@@ -71,11 +71,11 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           >
             <button
               type="submit"
-              className={`flex items-center gap-1 text-sm font-medium ${
+              className={`flex items-center gap-1.5 text-sm font-semibold ${
                 hasVoted ? "text-white" : "text-brown"
               }`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" />
               </svg>
               <span>{voteCount}</span>
@@ -87,15 +87,15 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <button
               type="button"
               onClick={() => setShowVoters(!showVoters)}
-              className="ml-1.5 flex items-center -space-x-1.5 transition-opacity hover:opacity-80"
+              className="ml-2 flex items-center gap-1 transition-opacity hover:opacity-80"
             >
               {visibleInitials.map((name, i) => (
                 <span
                   key={i}
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold ring-1 ${
+                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ${
                     hasVoted
-                      ? "bg-white/25 text-white ring-[#E04080]/50"
-                      : "bg-[#E04080]/15 text-[#E04080] ring-white"
+                      ? "bg-white/30 text-white"
+                      : "bg-[#E04080]/15 text-[#E04080]"
                   }`}
                   title={name}
                 >
@@ -103,7 +103,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
                 </span>
               ))}
               {extraCount > 0 && (
-                <span className={`ml-2 text-xs font-medium ${
+                <span className={`text-xs font-medium ${
                   hasVoted ? "text-white/80" : "text-brown-light"
                 }`}>
                   +{extraCount}
