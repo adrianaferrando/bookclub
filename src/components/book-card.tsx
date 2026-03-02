@@ -15,7 +15,7 @@ interface BookCardProps {
 export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: BookCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="aspect-square w-full bg-cream-dark">
+      <div className="relative aspect-square w-full bg-cream-dark">
         {coverUrl ? (
           <Image
             src={coverUrl}
@@ -31,6 +31,17 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: Bo
             </span>
           </div>
         )}
+
+        {/* Vote button overlay */}
+        <form action={() => toggleVote(id, "anonymous")} className="absolute bottom-2 right-2">
+          <button
+            type="submit"
+            className="flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-sm font-medium text-brown shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-forest"
+          >
+            <span>♥</span>
+            <span>{voteCount}</span>
+          </button>
+        </form>
       </div>
 
       <div className="p-4">
@@ -49,31 +60,19 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: Bo
           </div>
         )}
 
-        <div className="mt-3 flex items-center justify-between">
-          <form action={() => toggleVote(id, "anonymous")}>
-            <button
-              type="submit"
-              className="flex items-center gap-1.5 rounded-full bg-cream px-3 py-1.5 text-sm font-medium text-brown transition-colors hover:bg-sage/20 hover:text-forest"
-            >
-              <span>♥</span>
-              <span>{voteCount}</span>
-            </button>
-          </form>
-
-          <form action={() => deleteBook(id)}>
-            <button
-              type="submit"
-              className="rounded-full p-1.5 text-brown-light/50 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
-              title="Eliminar libro"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 6h18" />
-                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-              </svg>
-            </button>
-          </form>
-        </div>
+        <form action={() => deleteBook(id)} className="mt-2">
+          <button
+            type="submit"
+            className="rounded-full p-1.5 text-brown-light/50 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
+            title="Eliminar libro"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 6h18" />
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+            </svg>
+          </button>
+        </form>
       </div>
     </div>
   );
