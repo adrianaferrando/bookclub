@@ -39,7 +39,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, hasV
             type="submit"
             className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-sm font-medium shadow-sm backdrop-blur-sm transition-colors ${
               hasVoted
-                ? "bg-[#D43A65]/90 text-white hover:bg-[#D43A65]"
+                ? "bg-[#E04080]/90 text-white hover:bg-[#E04080]"
                 : "bg-white/90 text-brown hover:bg-white"
             }`}
           >
