@@ -14,6 +14,10 @@
 }
 
 body {
-  background: var(--color-cream);
+  background: #FAFAFA;
   color: var(--color-brown);
+}
+
+.font-serif {
+  font-family: var(--font-crete), serif;
 }

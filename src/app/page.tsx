@@ -21,7 +21,7 @@ export default async function Home() {
     .orderBy(desc(sql`vote_count`), desc(books.createdAt));
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-6 pt-8 pb-12">
         <h1 className="font-serif text-4xl font-bold text-brown">
           Book Club
