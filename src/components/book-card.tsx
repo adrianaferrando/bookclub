@@ -97,7 +97,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
                       ? "bg-white/30 text-white ring-[#E04080]/70"
                       : "bg-[#E04080]/15 text-[#E04080] ring-white"
                   }`}
-                  style={{ zIndex: visibleInitials.length - i }}
+                  style={{ zIndex: i }}
                   title={name}
                 >
                   {getInitials(name)}
