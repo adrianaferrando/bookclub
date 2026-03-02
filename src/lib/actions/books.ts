@@ -8,6 +8,7 @@ import { revalidatePath } from "next/cache";
 export async function addBook(formData: FormData) {
   const title = formData.get("title") as string;
   const author = formData.get("author") as string;
+  const addedBy = formData.get("addedBy") as string;
 
   if (!title?.trim() || !author?.trim()) return;
 
@@ -44,6 +45,7 @@ export async function addBook(formData: FormData) {
     title: title.trim(),
     author: author.trim(),
     coverUrl,
+    addedBy: addedBy?.trim() || null,
   });
 
   revalidatePath("/");

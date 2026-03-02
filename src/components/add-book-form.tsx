@@ -265,6 +265,24 @@ export function AddBookForm() {
                   </div>
                 </div>
 
+                {/* Added by field */}
+                <div>
+                  <label
+                    htmlFor="addedBy"
+                    className="block text-sm font-medium text-brown-light"
+                  >
+                    Tu nombre
+                  </label>
+                  <input
+                    id="addedBy"
+                    name="addedBy"
+                    type="text"
+                    required
+                    placeholder="¿Quién lo recomienda?"
+                    className="mt-1 w-full rounded-xl border border-cream-dark bg-cream px-4 py-3 text-brown placeholder:text-brown-light/50 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/20"
+                  />
+                </div>
+
                 <div className="mt-auto flex flex-col gap-3">
                   <button
                     type="submit"

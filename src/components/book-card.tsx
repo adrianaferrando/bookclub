@@ -8,13 +8,14 @@ interface BookCardProps {
   title: string;
   author: string;
   coverUrl: string | null;
+  addedBy: string | null;
   voteCount: number;
 }
 
-export function BookCard({ id, title, author, coverUrl, voteCount }: BookCardProps) {
+export function BookCard({ id, title, author, coverUrl, addedBy, voteCount }: BookCardProps) {
   return (
     <div className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md">
-      <div className="aspect-[2/3] w-full bg-cream-dark">
+      <div className="aspect-[3/4] w-full bg-cream-dark">
         {coverUrl ? (
           <Image
             src={coverUrl}
@@ -37,6 +38,16 @@ export function BookCard({ id, title, author, coverUrl, voteCount }: BookCardPro
           {title}
         </h3>
         <p className="mt-1 text-sm text-brown-light">{author}</p>
+
+        {addedBy && (
+          <div className="mt-2 flex items-center gap-1.5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brown-light/60">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span className="text-xs text-brown-light/60">{addedBy}</span>
+          </div>
+        )}
 
         <div className="mt-3 flex items-center justify-between">
           <form action={() => toggleVote(id, "anonymous")}>

@@ -12,6 +12,7 @@ export default async function Home() {
       title: books.title,
       author: books.author,
       coverUrl: books.coverUrl,
+      addedBy: books.addedBy,
       createdAt: books.createdAt,
       voteCount: sql<number>`count(${votes.id})`.as("vote_count"),
     })
@@ -56,6 +57,7 @@ export default async function Home() {
                   title={book.title}
                   author={book.author}
                   coverUrl={book.coverUrl}
+                  addedBy={book.addedBy}
                   voteCount={book.voteCount}
                 />
               ))}

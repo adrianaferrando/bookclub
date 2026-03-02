@@ -5,6 +5,7 @@ export const books = sqliteTable("books", {
   title: text("title").notNull(),
   author: text("author").notNull(),
   coverUrl: text("cover_url"),
+  addedBy: text("added_by"),
   createdAt: text("created_at")
     .notNull()
     .$defaultFn(() => new Date().toISOString()),
