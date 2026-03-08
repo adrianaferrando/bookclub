@@ -168,14 +168,14 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           )}
         </div>
 
-        <div className="h-[108px] p-4">
+        <div className="flex h-[108px] flex-col p-4">
           <h3 className="line-clamp-2 font-serif text-base font-semibold leading-tight text-brown">
             {title}
           </h3>
           <p className="mt-1 line-clamp-1 text-sm text-brown-light">{author}</p>
 
           {addedBy && (
-            <div className="mt-2 flex items-center gap-1.5">
+            <div className="mt-auto flex items-center gap-1.5">
               <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0 text-brown-light/60">
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
