@@ -334,7 +334,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
               ¿Quieres borrar este libro de la librería de votaciones?
             </p>
             <p className="mt-2 text-xs text-brown-light">
-              Esta acción es irreversible.
+              Esta acción no se puede deshacer.
             </p>
             <div className="mt-5 flex gap-3">
               <form action={() => { deleteBook(id); setShowDeleteConfirm(false); handleCloseDetail(); }} className="flex-1">
