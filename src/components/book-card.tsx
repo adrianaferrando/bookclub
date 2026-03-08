@@ -1,6 +1,7 @@
 "use client";
 
 import { deleteBook, toggleVote } from "@/lib/actions/books";
+import { getVoterColors } from "@/lib/colors";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -28,6 +29,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
   const [showVoters, setShowVoters] = useState(false);
 
   const hasVoted = username ? voters.includes(username) : false;
+  const myColors = getVoterColors(username);
   const reversedVoters = [...voters].reverse();
   const visibleInitials = reversedVoters.slice(0, 4);
   const extraCount = voters.length - 4;
@@ -52,11 +54,14 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
         )}
 
         {/* Vote component */}
-        <div className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm transition-colors ${
-          hasVoted
-            ? "bg-[#E04080]/90 hover:bg-[#E04080]"
-            : "bg-white/90 hover:bg-white"
-        } ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}>
+        <div
+          className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm transition-colors ${
+            hasVoted
+              ? "hover:opacity-90"
+              : "bg-white/90 hover:bg-white"
+          } ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}
+          style={hasVoted ? { backgroundColor: `${myColors.strong}E6` } : undefined}
+        >
           {/* Heart vote button */}
           <form
             action={() => toggleVote(id, username)}
@@ -82,27 +87,37 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
               onClick={() => setShowVoters(!showVoters)}
               className="ml-2 flex items-center transition-opacity hover:opacity-80"
             >
-              {visibleInitials.map((name, i) => (
-                <span
-                  key={i}
-                  className={`-ml-2 first:ml-0 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold ring-2 ${
-                    hasVoted
-                      ? "bg-[#F4A0C0] text-white ring-[#E04080]"
-                      : "bg-[#FADCE8] text-[#E04080] ring-white"
-                  }`}
-                  style={{ zIndex: visibleInitials.length - i }}
-                  title={name}
-                >
-                  {getInitials(name)}
-                </span>
-              ))}
+              {visibleInitials.map((name, i) => {
+                const colors = getVoterColors(name);
+                return (
+                  <span
+                    key={i}
+                    className="-ml-2 first:ml-0 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-bold"
+                    style={{
+                      backgroundColor: colors.light,
+                      color: colors.strong,
+                      boxShadow: hasVoted
+                        ? `0 0 0 2px ${myColors.strong}`
+                        : "0 0 0 2px white",
+                      zIndex: visibleInitials.length - i,
+                    }}
+                    title={name}
+                  >
+                    {getInitials(name)}
+                  </span>
+                );
+              })}
               {extraCount > 0 && (
                 <span
-                  className={`-ml-2 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-semibold ring-2 ${
-                    hasVoted
-                      ? "bg-[#C0305F] text-white ring-[#E04080]"
-                      : "bg-cream-dark text-brown-light ring-white"
+                  className={`-ml-2 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-semibold ${
+                    hasVoted ? "text-white" : "bg-cream-dark text-brown-light"
                   }`}
+                  style={{
+                    backgroundColor: hasVoted ? `${myColors.strong}CC` : undefined,
+                    boxShadow: hasVoted
+                      ? `0 0 0 2px ${myColors.strong}`
+                      : "0 0 0 2px white",
+                  }}
                 >
                   +{extraCount}
                 </span>
@@ -117,14 +132,23 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-brown-light/60">
               Votos
             </p>
-            {voters.map((name, i) => (
-              <div key={i} className="flex items-center gap-2 rounded-lg px-1.5 py-1">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E04080]/15 text-[9px] font-bold text-[#E04080]">
-                  {getInitials(name)}
-                </span>
-                <span className="text-xs text-brown">{name}</span>
-              </div>
-            ))}
+            {voters.map((name, i) => {
+              const colors = getVoterColors(name);
+              return (
+                <div key={i} className="flex items-center gap-2 rounded-lg px-1.5 py-1">
+                  <span
+                    className="flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold"
+                    style={{
+                      backgroundColor: `${colors.strong}26`,
+                      color: colors.strong,
+                    }}
+                  >
+                    {getInitials(name)}
+                  </span>
+                  <span className="text-xs text-brown">{name}</span>
+                </div>
+              );
+            })}
           </div>
         )}
       </div>
