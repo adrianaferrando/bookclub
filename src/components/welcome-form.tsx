@@ -23,7 +23,7 @@ export function WelcomeForm() {
         disabled={!name.trim()}
         className="mt-4 w-full rounded-full bg-forest py-3 text-sm font-medium text-white shadow-lg shadow-forest/25 transition-all hover:bg-sage-dark hover:-translate-y-0.5 hover:shadow-xl hover:shadow-forest/30 disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg"
       >
-        Empezar
+        Entrar
       </button>
     </form>
   );
