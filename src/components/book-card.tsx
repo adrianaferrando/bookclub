@@ -14,6 +14,7 @@ interface BookCardProps {
   voteCount: number;
   voters: string[];
   username: string;
+  status?: "active" | "read";
 }
 
 function getInitials(name: string): string {
@@ -25,7 +26,7 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, voters, username }: BookCardProps) {
+export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, voters, username, status = "active" }: BookCardProps) {
   const [showVoters, setShowVoters] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
@@ -106,6 +107,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           )}
 
           {/* Vote component */}
+          {status === "active" && (<>
           <div
             className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm bg-white/90 hover:bg-white transition-colors ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}
             onClick={(e) => e.stopPropagation()}
@@ -195,6 +197,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
               })}
             </div>
           )}
+          </>)}
         </div>
 
         <div className="flex h-[108px] flex-col p-4">
@@ -271,18 +274,20 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <div className="p-5">
               <div className="flex items-start justify-between gap-2">
                 <h2 className="font-serif text-xl font-bold text-brown">{title}</h2>
-                <button
-                  type="button"
-                  onClick={() => setShowDeleteConfirm(true)}
-                  className="mt-1 rounded-full p-1.5 text-brown-light/40 transition-colors hover:bg-red-50 hover:text-red-400"
-                  title="Eliminar libro"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 6h18" />
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                  </svg>
-                </button>
+                {status === "active" && (
+                  <button
+                    type="button"
+                    onClick={() => setShowDeleteConfirm(true)}
+                    className="mt-1 rounded-full p-1.5 text-brown-light/40 transition-colors hover:bg-red-50 hover:text-red-400"
+                    title="Eliminar libro"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 6h18" />
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                  </button>
+                )}
               </div>
               <p className="mt-1 text-sm text-brown-light">{author}</p>
 

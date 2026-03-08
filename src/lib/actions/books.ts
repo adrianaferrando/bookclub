@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { books, votes } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql, asc, desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 export async function addBook(formData: FormData) {
@@ -54,6 +54,46 @@ export async function addBook(formData: FormData) {
 export async function deleteBook(bookId: number) {
   await db.delete(books).where(eq(books.id, bookId));
   revalidatePath("/");
+}
+
+export async function closeVoting() {
+  const today = new Date();
+  const day = today.getDate();
+
+  if (day > 3) {
+    return { error: "Solo se puede cerrar la votación entre el día 1 y 3 del mes." };
+  }
+
+  // Buscar el libro activo con más votos (empate → más antiguo)
+  const winner = await db
+    .select({
+      id: books.id,
+      voteCount: sql<number>`count(${votes.id})`.as("vote_count"),
+    })
+    .from(books)
+    .leftJoin(votes, eq(books.id, votes.bookId))
+    .where(eq(books.status, "active"))
+    .groupBy(books.id)
+    .orderBy(desc(sql`vote_count`), asc(books.createdAt))
+    .limit(1);
+
+  if (!winner[0] || winner[0].voteCount === 0) {
+    return { error: "No hay libros con votos para cerrar la votación." };
+  }
+
+  const month = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+
+  // Marcar ganador como leído
+  await db
+    .update(books)
+    .set({ status: "read", readAt: month })
+    .where(eq(books.id, winner[0].id));
+
+  // Borrar todos los votos
+  await db.delete(votes);
+
+  revalidatePath("/");
+  return { success: true };
 }
 
 export async function toggleVote(bookId: number, voterId: string) {

@@ -50,7 +50,8 @@ export function AddBookForm({ username }: { username: string }) {
 
   // Search Open Library for suggestions
   const searchBooks = useCallback(
-    debounce(async (query: string) => {
+    debounce(async (query: unknown) => {
+      if (typeof query !== "string") return;
       if (query.length < 3) {
         setSuggestions([]);
         setShowSuggestions(false);
