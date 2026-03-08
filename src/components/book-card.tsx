@@ -32,6 +32,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
   const [synopsis, setSynopsis] = useState<string | null>(null);
   const [synopsisLoading, setSynopsisLoading] = useState(false);
   const [synopsisFetched, setSynopsisFetched] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const hasVoted = username ? voters.includes(username) : false;
   const myColors = getVoterColors(username);
@@ -270,19 +271,18 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <div className="p-5">
               <div className="flex items-start justify-between gap-2">
                 <h2 className="font-serif text-xl font-bold text-brown">{title}</h2>
-                <form action={() => { deleteBook(id); handleCloseDetail(); }}>
-                  <button
-                    type="submit"
-                    className="mt-1 rounded-full p-1.5 text-brown-light/40 transition-colors hover:bg-red-50 hover:text-red-400"
-                    title="Eliminar libro"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 6h18" />
-                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                    </svg>
-                  </button>
-                </form>
+                <button
+                  type="button"
+                  onClick={() => setShowDeleteConfirm(true)}
+                  className="mt-1 rounded-full p-1.5 text-brown-light/40 transition-colors hover:bg-red-50 hover:text-red-400"
+                  title="Eliminar libro"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 6h18" />
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                  </svg>
+                </button>
               </div>
               <p className="mt-1 text-sm text-brown-light">{author}</p>
 
@@ -319,6 +319,38 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
                 className="mt-5 w-full rounded-full border border-cream-dark py-2.5 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
               >
                 Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete confirmation modal */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center px-8">
+          <div className="absolute inset-0 bg-brown/50" onClick={() => setShowDeleteConfirm(false)} />
+          <div className="relative w-full max-w-xs rounded-2xl bg-warm-white p-6 shadow-xl text-center">
+            <p className="font-serif text-base font-semibold text-brown">
+              ¿Quieres borrar este libro de la librería de votaciones?
+            </p>
+            <p className="mt-2 text-xs text-brown-light">
+              Esta acción es irreversible.
+            </p>
+            <div className="mt-5 flex gap-3">
+              <form action={() => { deleteBook(id); setShowDeleteConfirm(false); handleCloseDetail(); }} className="flex-1">
+                <button
+                  type="submit"
+                  className="w-full rounded-full border border-red-200 py-2 text-sm font-medium text-red-500 transition-colors hover:bg-red-50"
+                >
+                  Borrar
+                </button>
+              </form>
+              <button
+                type="button"
+                onClick={() => setShowDeleteConfirm(false)}
+                className="flex-1 rounded-full bg-forest py-2 text-sm font-medium text-white transition-colors hover:bg-sage-dark"
+              >
+                Conservar
               </button>
             </div>
           </div>
