@@ -43,10 +43,10 @@ export default async function Home() {
     <div className="min-h-screen">
       <main className="mx-auto max-w-5xl px-6 pt-8 pb-12">
         <h1 className="font-serif text-4xl font-bold text-brown">
-          Bienvenido al Book Club
+          Librería de votaciones
         </h1>
         <ol className="mt-2 list-decimal list-inside text-brown-light">
-          <li>Añade un libro que te apetezca leer</li>
+          <li>{username}, añade libros que te apetezca leer</li>
           <li>Vota tantos libros como quieras</li>
         </ol>
 
