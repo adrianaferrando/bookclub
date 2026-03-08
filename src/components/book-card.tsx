@@ -169,10 +169,12 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
         </div>
 
         <div className="flex h-[108px] flex-col p-4">
-          <h3 className="line-clamp-2 font-serif text-base font-semibold leading-tight text-brown">
-            {title}
-          </h3>
-          <p className="mt-1 line-clamp-1 text-sm text-brown-light">{author}</p>
+          <div>
+            <h3 className="line-clamp-2 font-serif text-base font-semibold leading-tight text-brown">
+              {title}
+            </h3>
+            <p className="mt-1 line-clamp-1 text-sm text-brown-light">{author}</p>
+          </div>
 
           {addedBy && (
             <div className="mt-auto flex items-center gap-1.5">
