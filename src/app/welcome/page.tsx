@@ -10,7 +10,7 @@ export default function WelcomePage() {
           alt="Librería acogedora"
           width={400}
           height={400}
-          className="mx-auto w-64"
+          className="mx-auto w-80"
           priority
         />
 
