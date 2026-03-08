@@ -45,7 +45,7 @@ export default async function Home() {
         <h1 className="font-serif text-4xl font-bold text-brown">
           Librería de votaciones
         </h1>
-        <ol className="mt-2 list-decimal list-inside text-brown-light">
+        <ol className="mt-2 list-decimal list-inside text-sm text-brown-light">
           <li>{username}, añade libros que te apetezca leer con el club.</li>
           <li>Vota los libros que te gustaría que salieran en la próxima lectura del club.</li>
         </ol>
