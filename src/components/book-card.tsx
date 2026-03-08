@@ -168,8 +168,8 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           )}
         </div>
 
-        <div className="h-[104px] p-4">
-          <h3 className="line-clamp-2 font-serif text-lg font-semibold leading-tight text-brown">
+        <div className="h-[108px] p-4">
+          <h3 className="line-clamp-2 font-serif text-base font-semibold leading-tight text-brown">
             {title}
           </h3>
           <p className="mt-1 line-clamp-1 text-sm text-brown-light">{author}</p>
