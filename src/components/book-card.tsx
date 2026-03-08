@@ -2,7 +2,7 @@
 
 import { deleteBook, toggleVote } from "@/lib/actions/books";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface BookCardProps {
   id: number;
@@ -12,6 +12,7 @@ interface BookCardProps {
   addedBy: string | null;
   voteCount: number;
   voters: string[];
+  username: string;
 }
 
 function getInitials(name: string): string {
@@ -23,14 +24,8 @@ function getInitials(name: string): string {
     .slice(0, 2);
 }
 
-export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, voters }: BookCardProps) {
-  const [username, setUsername] = useState("");
+export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, voters, username }: BookCardProps) {
   const [showVoters, setShowVoters] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem("bookclub-username");
-    if (saved) setUsername(saved);
-  }, []);
 
   const hasVoted = username ? voters.includes(username) : false;
   const reversedVoters = [...voters].reverse();
@@ -64,10 +59,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
         } ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}>
           {/* Heart vote button */}
           <form
-            action={() => {
-              const name = username || "anonymous";
-              toggleVote(id, name);
-            }}
+            action={() => toggleVote(id, username)}
             className="flex items-center"
           >
             <button

@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { db } from "@/db";
 import { books, votes } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
@@ -6,6 +7,8 @@ import { BookCard } from "@/components/book-card";
 import { BooksIllustration } from "@/components/books-illustration";
 
 export default async function Home() {
+  const cookieStore = await cookies();
+  const username = cookieStore.get("bookclub-username")?.value || "";
   const allBooks = await db
     .select({
       id: books.id,
@@ -57,13 +60,13 @@ export default async function Home() {
               ¡Añade el primero para empezar!
             </p>
             <div className="mt-6">
-              <AddBookForm />
+              <AddBookForm username={username} />
             </div>
           </div>
         ) : (
           <>
             <div className="mt-6">
-              <AddBookForm />
+              <AddBookForm username={username} />
             </div>
             <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
               {allBooks.map((book) => (
@@ -76,6 +79,7 @@ export default async function Home() {
                   addedBy={book.addedBy}
                   voteCount={book.voteCount}
                   voters={votersByBook.get(book.id) || []}
+                  username={username}
                 />
               ))}
             </div>

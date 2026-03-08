@@ -17,7 +17,7 @@ function debounce<T extends (...args: unknown[]) => void>(fn: T, ms: number) {
   };
 }
 
-export function AddBookForm() {
+export function AddBookForm({ username }: { username: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -29,14 +29,7 @@ export function AddBookForm() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [authorAutoFilled, setAuthorAutoFilled] = useState(false);
-  const [addedByName, setAddedByName] = useState("");
   const suggestionsRef = useRef<HTMLDivElement>(null);
-
-  // Load saved username
-  useEffect(() => {
-    const saved = localStorage.getItem("bookclub-username");
-    if (saved) setAddedByName(saved);
-  }, []);
 
   // Handle open/close animation
   useEffect(() => {
@@ -119,10 +112,6 @@ export function AddBookForm() {
   }
 
   async function handleSubmit(formData: FormData) {
-    const name = formData.get("addedBy") as string;
-    if (name?.trim()) {
-      localStorage.setItem("bookclub-username", name.trim());
-    }
     await addBook(formData);
     handleClose();
   }
@@ -276,25 +265,7 @@ export function AddBookForm() {
                   </div>
                 </div>
 
-                {/* Added by field */}
-                <div>
-                  <label
-                    htmlFor="addedBy"
-                    className="block text-sm font-medium text-brown-light"
-                  >
-                    Tu nombre
-                  </label>
-                  <input
-                    id="addedBy"
-                    name="addedBy"
-                    type="text"
-                    required
-                    value={addedByName}
-                    onChange={(e) => setAddedByName(e.target.value)}
-                    placeholder="¿Quién lo recomienda?"
-                    className="mt-1 w-full rounded-xl border border-cream-dark bg-cream px-4 py-3 text-brown placeholder:text-brown-light/50 focus:border-sage focus:outline-none focus:ring-2 focus:ring-sage/20"
-                  />
-                </div>
+                <input type="hidden" name="addedBy" value={username} />
 
                 <div className="mt-auto flex flex-col gap-3">
                   <button
