@@ -55,12 +55,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
 
         {/* Vote component */}
         <div
-          className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm transition-colors ${
-            hasVoted
-              ? "hover:opacity-90"
-              : "bg-white/90 hover:bg-white"
-          } ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}
-          style={hasVoted ? { backgroundColor: `${myColors.strong}E6` } : undefined}
+          className={`absolute bottom-2 right-2 flex items-center rounded-full py-1.5 pl-3 shadow-sm backdrop-blur-sm bg-white/90 hover:bg-white transition-colors ${voters.length > 0 ? "pr-1.5" : "pr-3"}`}
         >
           {/* Heart vote button */}
           <form
@@ -70,10 +65,10 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             <button
               type="submit"
               className={`flex items-center gap-1.5 text-sm font-semibold ${
-                hasVoted ? "text-white" : "text-brown"
+                hasVoted ? "text-[#E04080]" : "text-brown"
               }`}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={hasVoted ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={hasVoted ? "#E04080" : "none"} stroke={hasVoted ? "#E04080" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21C12 21 3 13.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.91 3.81 12 5C12.09 3.81 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 13.5 12 21 12 21Z" />
               </svg>
               <span>{voteCount}</span>
@@ -96,9 +91,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
                     style={{
                       backgroundColor: colors.light,
                       color: colors.strong,
-                      boxShadow: hasVoted
-                        ? `0 0 0 2px ${myColors.strong}`
-                        : "0 0 0 2px white",
+                      boxShadow: "0 0 0 2px white",
                       zIndex: visibleInitials.length - i,
                     }}
                     title={name}
@@ -109,14 +102,9 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
               })}
               {extraCount > 0 && (
                 <span
-                  className={`-ml-2 flex h-7 w-7 items-center justify-center rounded-full text-[10px] font-semibold ${
-                    hasVoted ? "text-white" : "bg-cream-dark text-brown-light"
-                  }`}
+                  className="-ml-2 flex h-7 w-7 items-center justify-center rounded-full bg-cream-dark text-[10px] font-semibold text-brown-light"
                   style={{
-                    backgroundColor: hasVoted ? `${myColors.strong}CC` : undefined,
-                    boxShadow: hasVoted
-                      ? `0 0 0 2px ${myColors.strong}`
-                      : "0 0 0 2px white",
+                    boxShadow: "0 0 0 2px white",
                   }}
                 >
                   +{extraCount}
