@@ -231,24 +231,6 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           <polyline points="9 18 15 12 9 6" />
         </svg>
 
-        {/* Delete button */}
-        <form
-          action={() => deleteBook(id)}
-          className="absolute bottom-2 right-2"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <button
-            type="submit"
-            className="rounded-full p-1.5 text-brown-light/50 opacity-0 transition-all hover:bg-red-50 hover:text-red-400 group-hover:opacity-100"
-            title="Eliminar libro"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 6h18" />
-              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-            </svg>
-          </button>
-        </form>
       </div>
 
       {/* Detail popup */}
@@ -286,7 +268,22 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
 
             {/* Info */}
             <div className="p-5">
-              <h2 className="font-serif text-xl font-bold text-brown">{title}</h2>
+              <div className="flex items-start justify-between gap-2">
+                <h2 className="font-serif text-xl font-bold text-brown">{title}</h2>
+                <form action={() => { deleteBook(id); handleCloseDetail(); }}>
+                  <button
+                    type="submit"
+                    className="mt-1 rounded-full p-1.5 text-brown-light/40 transition-colors hover:bg-red-50 hover:text-red-400"
+                    title="Eliminar libro"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 6h18" />
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
               <p className="mt-1 text-sm text-brown-light">{author}</p>
 
               {addedBy && (
