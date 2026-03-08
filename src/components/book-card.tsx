@@ -29,6 +29,9 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
   const [showVoters, setShowVoters] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const [detailVisible, setDetailVisible] = useState(false);
+  const [synopsis, setSynopsis] = useState<string | null>(null);
+  const [synopsisLoading, setSynopsisLoading] = useState(false);
+  const [synopsisFetched, setSynopsisFetched] = useState(false);
 
   const hasVoted = username ? voters.includes(username) : false;
   const myColors = getVoterColors(username);
@@ -48,6 +51,31 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
     return () => { document.body.style.overflow = ""; };
   }, [showDetail]);
 
+  // Fetch synopsis when popup opens
+  useEffect(() => {
+    if (showDetail && !synopsisFetched) {
+      setSynopsisLoading(true);
+      setSynopsisFetched(true);
+
+      const fetchSynopsis = async () => {
+        try {
+          const params = new URLSearchParams({ title, author });
+          const res = await fetch(`/api/synopsis?${params}`);
+          const data = await res.json();
+          if (data.description) {
+            setSynopsis(data.description);
+          }
+        } catch {
+          // Synopsis is not critical
+        } finally {
+          setSynopsisLoading(false);
+        }
+      };
+
+      fetchSynopsis();
+    }
+  }, [showDetail, synopsisFetched, title, author]);
+
   function handleCloseDetail() {
     setDetailVisible(false);
     setTimeout(() => setShowDetail(false), 300);
@@ -56,7 +84,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
   return (
     <>
       <div
-        className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-shadow hover:shadow-md cursor-pointer"
+        className="group relative overflow-hidden rounded-xl border border-cream-dark bg-warm-white shadow-sm transition-all hover:shadow-md active:scale-[0.97] active:shadow-sm cursor-pointer"
         onClick={() => setShowDetail(true)}
       >
         <div className="relative aspect-square w-full bg-cream-dark">
@@ -187,6 +215,22 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
           )}
         </div>
 
+        {/* Chevron indicator — mobile only */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="absolute bottom-3 right-3 text-brown-light/30 sm:hidden"
+        >
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+
         {/* Delete button */}
         <form
           action={() => deleteBook(id)}
@@ -209,7 +253,7 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
 
       {/* Detail popup */}
       {showDetail && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center px-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center px-6 py-10">
           <div
             className={`absolute inset-0 bg-brown/40 backdrop-blur-sm transition-opacity duration-300 ${
               detailVisible ? "opacity-100" : "opacity-0"
@@ -217,23 +261,23 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
             onClick={handleCloseDetail}
           />
           <div
-            className={`relative w-full max-w-sm transform overflow-hidden rounded-2xl bg-warm-white shadow-xl transition-all duration-300 ${
+            className={`relative w-full max-w-sm max-h-full transform overflow-y-auto rounded-2xl bg-warm-white shadow-xl transition-all duration-300 ${
               detailVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
             }`}
           >
             {/* Cover */}
             {coverUrl ? (
-              <div className="relative aspect-[3/4] w-full bg-cream-dark">
+              <div className="relative flex h-52 w-full items-center justify-center bg-cream-dark">
                 <Image
                   src={coverUrl}
                   alt={`Portada de ${title}`}
                   width={600}
                   height={800}
-                  className="h-full w-full object-cover"
+                  className="h-full w-auto max-w-full object-contain"
                 />
               </div>
             ) : (
-              <div className="flex aspect-[3/4] w-full items-center justify-center bg-gradient-to-br from-sage/20 to-forest/20 p-8">
+              <div className="flex h-52 w-full items-center justify-center bg-gradient-to-br from-sage/20 to-forest/20 p-8">
                 <span className="text-center font-serif text-2xl font-semibold text-brown-light">
                   {title}
                 </span>
@@ -255,9 +299,27 @@ export function BookCard({ id, title, author, coverUrl, addedBy, voteCount, vote
                 </div>
               )}
 
+              {/* Synopsis */}
+              {synopsisLoading && (
+                <div className="mt-4 flex items-center gap-2">
+                  <div className="h-3 w-3 animate-spin rounded-full border-2 border-sage border-t-transparent" />
+                  <span className="text-xs text-brown-light/60">Cargando sinopsis...</span>
+                </div>
+              )}
+              {synopsis && (
+                <div className="mt-4">
+                  <p className="text-[10px] font-semibold uppercase tracking-wide text-brown-light/60">
+                    Sinopsis
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-brown-light">
+                    {synopsis}
+                  </p>
+                </div>
+              )}
+
               <button
                 onClick={handleCloseDetail}
-                className="mt-4 w-full rounded-full border border-cream-dark py-2.5 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
+                className="mt-5 w-full rounded-full border border-cream-dark py-2.5 text-sm font-medium text-brown-light transition-colors hover:bg-cream-dark"
               >
                 Cerrar
               </button>
